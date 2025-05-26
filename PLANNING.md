@@ -1,6 +1,6 @@
 # System rekrutacji i zarządzania kandydatami w firmie HR – Plan
 
-##1. Cel projektu
+## 1. Cel projektu
 Celem projektu jest stworzenie aplikacji wspierającej proces rekrutacji w firmie HR. System pozwala na publikację ofert pracy, rejestrowanie się kandydatów (wraz z możliwością podpięcia CV), zarządzanie zgłoszeniami oraz generowanie raportów dotyczących skuteczności i przebiegu rekrutacji.
 
 ## 2. Zakres funkcjonalny
