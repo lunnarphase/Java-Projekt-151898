@@ -1,4 +1,4 @@
-#System rekrutacji i zarządzania kandydatami w firmie HR – Zadania
+# System rekrutacji i zarządzania kandydatami w firmie HR – Zadania
 
 ## 1. Konfiguracja wstępna
  Stworzyć repozytorium Git (np. na GitHub, GitLab) i zainicjować projekt w strukturze Maven.
