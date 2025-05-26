@@ -1,9 +1,12 @@
 # System rekrutacji i zarządzania kandydatami w firmie HR – Plan
 
 ##1. Cel projektu
-Celem projektu jest stworzenie aplikacji wspierającej proces rekrutacji w firmie HR. System pozwala na publikację ofert pracy, rejestrowanie się kandydatów (wraz z możliwością podpięcia CV), zarządzanie zgłoszeniami oraz generowanie raportów dotyczących skuteczności i przebiegu rekrutacji.
+Celem projektu jest stworzenie aplikacji wspierającej proces rekrutacji w firmie HR. System pozwala na publikację ofert
+pracy, rejestrowanie się kandydatów (wraz z możliwością podpięcia CV), zarządzanie zgłoszeniami oraz generowanie
+raportów dotyczących skuteczności i przebiegu rekrutacji.
 
 ## 2. Zakres funkcjonalny
+
 1. Publikacja i modyfikacja ofert pracy.
 2. Rejestracja kandydatów oraz uzupełnianie profilu zawodowego (CV, umiejętności).
 3. Aplikowanie kandydatów na wybrane oferty pracy.
@@ -12,6 +15,7 @@ Celem projektu jest stworzenie aplikacji wspierającej proces rekrutacji w firmi
 6. Rola użytkownika i rola administratora (HR/Rekruter) – zarządzanie dostępem przy pomocy Spring Security.
 
 ## 3. Filar technologiczny
+
 1. Język programowania: Java (zalecane minimum Java 11, preferowane Java 17+).
 2. Framework: Spring (Spring Boot, Spring Security, Spring Data JPA).
 3. Baza danych: PostgreSQL.
@@ -24,23 +28,28 @@ Celem projektu jest stworzenie aplikacji wspierającej proces rekrutacji w firmi
 10. Zarządzanie projektem i zależnościami: Maven (standardowa struktura katalogów, plik pom.xml).
 
 ## 4. Wymagania dotyczące architektury i jakości
+
 1. Zastosowanie paradygmatu obiektowości oraz zasad SOLID.
 2. Polimorfizm i co najmniej jeden wzorzec projektowy w kodzie.
 3. Czytelny i dobrze zorganizowany kod.
 4. Dwa typy użytkowników (co najmniej):
-    a) Użytkownik (Kandydat) – Role: USER
-    b) Administrator (Rekruter/HR) – Role: ADMIN
+   a) Użytkownik (Kandydat) – Role: USER
+   b) Administrator (Rekruter/HR) – Role: ADMIN
 5. Zarządzanie użytkownikami i uprawnieniami z pomocą Spring Security (RBAC).
 
 ## 5. Diagram ERD
-Projekt musi zawierać diagram ERD przedstawiający strukturę bazy danych, relacje między tabelami (m.in. Kandydat, Oferta, Aplikacja, itp.).
+
+Projekt musi zawierać diagram ERD przedstawiający strukturę bazy danych, relacje między tabelami (m.in. Kandydat,
+Oferta, Aplikacja, itp.).
 
 ## 6. Dokumentacja końcowa
+
 1. Plik README.md z opisem uruchomienia aplikacji, technologiami i instrukcjami konfiguracji.
 2. Screeny przedstawiające działanie aplikacji (można dołączyć np. z testów funkcjonalnych UI).
 3. Opis pokrycia testami jednostkowymi, opis testów integracyjnych
 
 ## 7. Planowane iteracje
+
 1. Projekt i konfiguracja nowego repozytorium Git.
 2. Przygotowanie środowiska Docker + PostgreSQL.
 3. Implementacja początkowej struktury projektu w oparciu o Spring Boot i standard Maven.
