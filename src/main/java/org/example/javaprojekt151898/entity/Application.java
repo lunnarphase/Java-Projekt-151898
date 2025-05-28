@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +20,11 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private ApplicationStatus status;
+
+    private String notes;
+
     @ManyToOne
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     private Candidate candidate;
@@ -25,12 +32,4 @@ public class Application {
     @ManyToOne
     @JoinColumn(name = "job_offer_id", referencedColumnName = "id")
     private JobOffer jobOffer;
-
-    private LocalDateTime applicationDate;
-
-    @Enumerated(EnumType.STRING)
-    private ApplicationStatus status;
-
-    private String notes;
-    private LocalDateTime lastUpdatedAt;
 }

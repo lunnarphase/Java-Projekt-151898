@@ -7,6 +7,7 @@ services:
       POSTGRES_DB: Java_Projekt_151898
       POSTGRES_USER: ADMIN
       POSTGRES_PASSWORD: SUPER_SECRET_PASSWORD
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     volumes:
@@ -29,4 +30,4 @@ services:
     restart: always
 
 volumes:
-  db_data: 
+  db_data:

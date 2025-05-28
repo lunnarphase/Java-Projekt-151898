@@ -29,22 +29,14 @@ public class JobOffer {
     private String requirements;
 
     private String location;
-    private BigDecimal salaryMin;
-    private BigDecimal salaryMax;
+    // private BigDecimal salaryMin;
+    // private BigDecimal salaryMax;
     private String companyName; // Placeholder, do rozbudowy w przyszłości
 
     private LocalDateTime publishedAt;
     private LocalDateTime expiresAt;
 
-    // Relacja do User (ManyToOne, rekruter) - do dodania później
-    // @ManyToOne
-    // @JoinColumn(name = "recruiter_id", referencedColumnName = "id")
-    // private User recruiter;
-
-    // Relacja do Application (OneToMany) - do dodania później
-    // @OneToMany(mappedBy = "jobOffer")
-    // private List<Application> applications;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
+    private User createdBy;
 }

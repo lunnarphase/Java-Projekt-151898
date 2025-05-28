@@ -1,4 +1,12 @@
 #System rekrutacji i zarządzania kandydatami w firmie HR – Zadania
+]
+Dodatkowe kontrolery REST API:
+- wyswietlenie ofert pracy dla danej firmy (companyName)
+- wyswietlenie ofert pracy dla konkretnej lokacji (location)
+- wyswietlenie ofert pracy utworzonych przez konkretnego uzytkownika (createdBy)
+
+
+========================================================================================================================
 
 ## 1. Konfiguracja wstępna
 
@@ -60,3 +68,5 @@ Dołączyć screeny z działania aplikacji (wywołanie endpointów, widok docker
 Upewnić się, że wszystkie wymogi formalne zostały spełnione (SOLID, rolę użytkownika, polimorfizm, wzorzec projektowy,
 Docker, migracje bazy, testy 80%+).
 Stworzyć prezentację wynikową (opcjonalnie).
+
+

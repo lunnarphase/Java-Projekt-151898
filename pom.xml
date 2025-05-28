@@ -117,6 +117,13 @@
 				</configuration>
 			</plugin>
 
+			<!-- Flyway -->
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>11.7.2</version>
+			</plugin>
+
 			<!-- Jacoco - pokrycie WYŁĄCZNIE dla testów integracyjnych -->
 			<plugin>
 				<groupId>org.jacoco</groupId>

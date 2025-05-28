@@ -28,15 +28,7 @@ public class Candidate {
     private String cvPath; // Placeholder, do dyskusji jak przechowywać CV
     private String skills; // Placeholder, do rozbudowy w przyszłości
 
-    // Relacja do User (np. OneToOne) - do dodania później
-    // @OneToOne
-    // @JoinColumn(name = "user_id", referencedColumnName = "id")
-    // private User user;
-
-    // Relacja do Application (OneToMany) - do dodania później
-    // @OneToMany(mappedBy = "candidate")
-    // private List<Application> applications;
-
-    private LocalDateTime createdAt; // Możemy dodać automatyczne ustawianie przy tworzeniu
-    private LocalDateTime updatedAt; // Możemy dodać automatyczne ustawianie przy aktualizacji
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }
