@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 // Na razie pomijamy importy dla User i Application, dodamy je później przy definicji relacji
 
 @Data
@@ -22,21 +24,26 @@ public class JobOffer {
 
     private String title;
 
-    @Lob // Dla dłuższych tekstów, można też użyć @Column(columnDefinition="TEXT")
+    @Lob
     private String description;
 
     @Lob
     private String requirements;
 
     private String location;
-    // private BigDecimal salaryMin;
-    // private BigDecimal salaryMax;
-    private String companyName; // Placeholder, do rozbudowy w przyszłości
+    private String companyName;
 
     private LocalDateTime publishedAt;
     private LocalDateTime expiresAt;
 
-    @ManyToOne
+    private boolean isActive;
+
+    // Twórca oferty (rekruter/HR)
+    @ManyToOne // Jeden rekruter może tworzyć wiele ofert pracy
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User createdBy;
+
+    // Relacja odwrotna do Application (lista aplikacji na tę ofertę)
+    @OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications = new ArrayList<>();
 }

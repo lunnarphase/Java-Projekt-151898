@@ -25,11 +25,24 @@ public class Application {
 
     private String notes;
 
+    // Data złożenia aplikacji – ustawiana automatycznie - OnCreate()
+    private LocalDateTime appliedAt;
+
+    // Kandydat, który składa aplikację
     @ManyToOne
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     private Candidate candidate;
 
+    // Oferta, na którą aplikujemy
     @ManyToOne
     @JoinColumn(name = "job_offer_id", referencedColumnName = "id")
     private JobOffer jobOffer;
+
+    // Metoda wykonywana przed zapisaniem encji do bazy
+    @PrePersist
+    protected void onCreate() {
+        if (this.appliedAt == null) {
+            this.appliedAt = LocalDateTime.now();
+        }
+    }
 }

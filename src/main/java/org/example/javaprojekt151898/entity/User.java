@@ -26,12 +26,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    @Column(name = "login_email", unique = true, nullable = false)
+    private String loginEmail;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    // Encja User jest właścicielem kolekcji JobOffer poprzez mappedBy = "createdBy"
+    // CascadeType.ALL – usunięcie Usera spowoduje usunięcie wszystkich ofert pracy, które utworzył.
+    // orphanRemoval = true – jeśli usuniemy z kolekcji jobOffers konkretną ofertę
+    // (bez przypisania do innego Usera), to ta oferta również zostanie usunięta z bazy.
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobOffer> createdJobOffers = new ArrayList<>();
 

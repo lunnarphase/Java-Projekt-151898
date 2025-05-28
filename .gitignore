@@ -1,4 +1,4 @@
-HELP.md
+TASK.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 /.cursor
+
+TASK.md
+*.md
