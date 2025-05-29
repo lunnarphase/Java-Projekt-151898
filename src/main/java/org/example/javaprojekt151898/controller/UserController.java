@@ -2,7 +2,8 @@ package org.example.javaprojekt151898.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import org.example.javaprojekt151898.entity.User;
+import org.example.javaprojekt151898.interfaces.UserRequestDTO;
+import org.example.javaprojekt151898.interfaces.UserResponseDTO;
 import org.example.javaprojekt151898.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get user by ID", description = "Retrieve a user by its ID")
-    public User getUserById(
+    public UserResponseDTO getUserById(
             @Parameter(description = "ID of the user to be retrieved", required = true)
             @PathVariable Long id) {
         return userService.getUserById(id);
@@ -29,11 +30,11 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update existing user", description = "Updates an existing user by its ID")
-    public User updateUser(
+    public UserResponseDTO updateUser(
             @Parameter(description = "ID of the user to be updated", required = true)
             @PathVariable Long id,
             @Parameter(description = "Updated user data", required = true)
-            @RequestBody User updatedUser) {
+            @RequestBody UserRequestDTO updatedUser) {
         return userService.updateUser(id, updatedUser);
     }
 
@@ -47,15 +48,15 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Create a new user", description = "Creates a new user in the database")
-    public User createUser(
+    public UserResponseDTO createUser(
             @Parameter(description = "User to be created", required = true)
-            @RequestBody User user) {
-        return userService.createUser(user);
+            @RequestBody UserRequestDTO userRequestDTO) {
+        return userService.createUser(userRequestDTO);
     }
 
     @GetMapping
     @Operation(summary = "Get all users", description = "Retrieve a list of all users present in the database")
-    public List<User> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 }
