@@ -1,0 +1,64 @@
+package org.example.javaprojekt151898.controller;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.example.javaprojekt151898.interfaces.*;
+import org.example.javaprojekt151898.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/auth")
+@Tag(name = "Auth API", description = "Authentication and user management")
+public class AuthController {
+    @Autowired
+    private AuthService authService;
+
+    @Operation(summary = "Login", description = "Authenticate user and get JWT token")
+    @PostMapping("/login")
+    public LoginResponseDTO login(@RequestBody LoginRequestDTO body) {
+        return authService.login(body);
+    }
+
+    @Operation(summary = "Register", description = "Creates a new user account with provided details")
+    @PostMapping("/register")
+    public RegisterResponseDTO register(@RequestBody RegisterRequestDTO body) {
+        return authService.register(body);
+    }
+
+    @Operation(summary = "Get user details", description = "Returns details of the currently authenticated user")
+    @GetMapping("/user-details")
+    public UserDetailsDTO getAccountInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        return authService.getAccountInfo(userDetails);
+    }
+
+    @Operation(summary = "Update user details", description = "Updates basic information of the authenticated user")
+    @PutMapping("/user-details")
+    public UserDetailsDTO updateAccountInfo(@AuthenticationPrincipal UserDetails userDetails,
+                                            @RequestBody UpdateAccountDTO updateDto) {
+        return authService.updateAccountInfo(userDetails, updateDto);
+    }
+
+    @Operation(summary = "Change password", description = "Changes password for the authenticated user after verifying current password")
+    @PostMapping("/change-password")
+    public void changePassword(@AuthenticationPrincipal UserDetails userDetails,
+                               @RequestBody ChangePasswordDTO dto) {
+        authService.changePassword(userDetails, dto);
+    }
+
+    @Operation(summary = "Promote user to HR role", description = "Elevates user privileges to HR role (admin functionality)")
+    @PostMapping("/promote-hr")
+    public UserDetailsDTO promoteUserToHR(@RequestParam String loginEmail) {
+        var user = authService.promoteToHR(loginEmail);
+        // Zwracamy uproszczone dane
+        UserDetailsDTO dto = new UserDetailsDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setLoginEmail(user.getLoginEmail());
+        dto.setRole(user.getRole());
+        return dto;
+    }
+
+}

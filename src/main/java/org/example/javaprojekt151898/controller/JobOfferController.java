@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.javaprojekt151898.entity.JobOffer;
 import org.example.javaprojekt151898.service.JobOfferService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class JobOfferController {
 
     @PostMapping
     @Operation(summary = "Create a new job offer", description = "Creates a new job offer in the database")
+    @PreAuthorize("hasRole('HR')")
     public JobOffer createJobOffer(
             @Parameter(description = "JobOffer to be created", required = true)
             @RequestBody JobOffer jobOffer) {
