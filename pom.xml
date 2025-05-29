@@ -42,7 +42,6 @@
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
 
-
 		<!-- Devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
