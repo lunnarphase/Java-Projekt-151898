@@ -5,6 +5,7 @@ import org.example.javaprojekt151898.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
@@ -31,8 +33,8 @@ public class SecurityConfig {
                         // Tylko zautoryzowany użytkownik z rolą HR może tworzyć oferty
                         .requestMatchers("/api/job-offers/**").hasRole(UserRole.HR.name())
 
-                        // Kandydat może przeglądać oferty i aplikować
-                        .requestMatchers("/api/applications/**").hasRole(UserRole.CANDIDATE.name())
+                        // Każdy może przeglądać oferty i aplikować, dodatkowe uprawnienia delegowane przez @PreAuthorize
+                        .requestMatchers("/api/applications/**").hasAnyRole(UserRole.HR.name(), UserRole.ADMIN.name(), UserRole.CANDIDATE.name())
 
                         // Pozostałe muszą być zalogowane
                         .anyRequest().authenticated()

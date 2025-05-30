@@ -30,12 +30,14 @@ public class AuthController {
     }
 
     @Operation(summary = "ALL - Get user details", description = "Returns details of the currently authenticated user")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public UserDetailsDTO getAccountInfo(@AuthenticationPrincipal UserDetails userDetails) {
         return authService.getAccountInfo(userDetails);
     }
 
     @Operation(summary = "ALL - Update user details", description = "Updates basic information of the authenticated user")
     @PutMapping("/user-details")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public UserDetailsDTO updateAccountInfo(@AuthenticationPrincipal UserDetails userDetails,
                                             @RequestBody UpdateAccountDTO updateDto) {
         return authService.updateAccountInfo(userDetails, updateDto);
@@ -43,6 +45,7 @@ public class AuthController {
 
     @Operation(summary = "ALL - Change password", description = "Changes password for the authenticated user after verifying current password")
     @PostMapping("/change-password")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public void changePassword(@AuthenticationPrincipal UserDetails userDetails,
                                @RequestBody ChangePasswordDTO dto) {
         authService.changePassword(userDetails, dto);

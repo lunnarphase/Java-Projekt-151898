@@ -40,7 +40,6 @@ public class AuthService {
     }
 
     public RegisterResponseDTO register(RegisterRequestDTO body) {
-        // Sprawdź czy loginEmail już istnieje
         if (userRepository.findByLoginEmail(body.getLoginEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this email already exists");
         }
@@ -81,7 +80,6 @@ public class AuthService {
             user.setUsername(updateDto.getUsername());
         }
         if (updateDto.getLoginEmail() != null && !updateDto.getLoginEmail().trim().isEmpty()) {
-            // Ewentualna walidacja czy nie istnieje użytkownik z takim mailem
             user.setLoginEmail(updateDto.getLoginEmail());
         }
 
@@ -108,7 +106,6 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    // Ewentualnie metoda podnosząca użytkownika do roli HR, jeśli w Twoim systemie ma to sens
     public User promoteToHR(String loginEmail) {
         User user = userRepository
                 .findByLoginEmail(loginEmail)

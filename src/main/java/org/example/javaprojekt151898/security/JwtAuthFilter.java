@@ -34,7 +34,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = header.substring(7); // "Bearer ".length() = 7
+        String token = header.substring(7);
         if (!StringUtils.hasText(token) || !jwtUtil.validateToken(token)) {
             filterChain.doFilter(request, response);
             return;
@@ -42,17 +42,27 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String email = jwtUtil.getLoginEmailFromToken(token);
         String role = jwtUtil.getRoleFromToken(token);
-
-        // W kontekście Spring Security rola musi mieć prefix "ROLE_"
-        // Dlatego np. jeśli role="HR", to w obiekcie Authentication będzie "ROLE_HR"
         var authorities = jwtUtil.getAuthorities(role);
 
-        // Tworzymy obiekt autoryzacji
+        // --- POPRAWKA: pobierz UserDetails z bazy ---
+        var userOpt = userRepository.findByLoginEmail(email);
+        if (userOpt.isEmpty()) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        var user = userOpt.get();
+
+        org.springframework.security.core.userdetails.UserDetails userDetails =
+                org.springframework.security.core.userdetails.User
+                        .withUsername(user.getLoginEmail())
+                        .password(user.getPassword())
+                        .authorities(authorities)
+                        .build();
+
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(email, null, authorities);
+                new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-        // Ustawienie w SecurityContext
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }

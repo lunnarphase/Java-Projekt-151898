@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.javaprojekt151898.interfaces.ApplicationRequestDTO;
 import org.example.javaprojekt151898.interfaces.ApplicationResponseDTO;
 import org.example.javaprojekt151898.service.ApplicationService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get application by ID", description = "Retrieve an application by its ID")
+    @Operation(summary = "ALL - Get application by ID", description = "Retrieve an application by its ID")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public ApplicationResponseDTO getApplicationById(
             @Parameter(description = "ID of the application", required = true)
             @PathVariable Long id) {
@@ -29,13 +31,15 @@ public class ApplicationController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all applications", description = "Retrieve a list of all applications")
+    @Operation(summary = "HR / ADMIN - Get all applications", description = "Retrieve a list of all applications")
+    @PreAuthorize("hasAnyRole('HR', 'ADMIN')")
     public List<ApplicationResponseDTO> getAllApplications() {
         return applicationService.getAllApplications();
     }
 
     @PostMapping
-    @Operation(summary = "Create a new application", description = "Creates a new application in the database")
+    @Operation(summary = "CANDIDATE / ADMIN - Create a new application", description = "Creates a new application in the database")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'ADMIN')")
     public ApplicationResponseDTO createApplication(
             @Parameter(description = "Application to be created", required = true)
             @RequestBody ApplicationRequestDTO applicationRequestDTO) {
@@ -43,7 +47,8 @@ public class ApplicationController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update existing application", description = "Updates an existing application by its ID")
+    @Operation(summary = "CANDIDATE / ADMIN - Update existing application", description = "Updates an existing application by its ID")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'ADMIN')")
     public ApplicationResponseDTO updateApplication(
             @Parameter(description = "ID of the application to be updated", required = true)
             @PathVariable Long id,
@@ -53,7 +58,8 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete application by ID", description = "Deletes the application with the specified ID")
+    @Operation(summary = "ADMIN - Delete application by ID", description = "Deletes the application with the specified ID")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteApplication(
             @Parameter(description = "ID of the application to be deleted", required = true)
             @PathVariable Long id) {

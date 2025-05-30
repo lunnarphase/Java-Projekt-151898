@@ -48,7 +48,7 @@ public class CandidateController {
     }
 
     @PostMapping
-    @Operation(summary = "Create a new candidate", description = "Creates a new candidate in the database")
+    @Operation(summary = "ALL - Create a new candidate", description = "Creates a new candidate in the database")
     @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public CandidateResponseDTO createCandidate(
             @Parameter(description = "Candidate to be created", required = true)
@@ -57,7 +57,7 @@ public class CandidateController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update existing candidate", description = "Updates an existing candidate by its ID")
+    @Operation(summary = "ALL - Update existing candidate", description = "Updates an existing candidate by its ID")
     @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public CandidateResponseDTO updateCandidate(
             @Parameter(description = "ID of the candidate to be updated", required = true)
