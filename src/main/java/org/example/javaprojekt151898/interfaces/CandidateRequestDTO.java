@@ -10,7 +10,6 @@ public class CandidateRequestDTO {
     private String phoneNumber;
     private String cvPath;
     private String skills;
-    // Zwykle w requestach do tworzenia kandydata wystarczy userId,
-    // żeby powiązać go z istniejącym userem.
+
     private Long userId;
 }

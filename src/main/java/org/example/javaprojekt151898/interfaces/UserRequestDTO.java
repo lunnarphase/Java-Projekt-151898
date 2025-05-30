@@ -9,7 +9,4 @@ public class UserRequestDTO {
     private String password;
     private String loginEmail;
     private UserRole role;
-// Możesz dodać ewentualnie listę JobOfferRequestDTO,
-// ale zwykle w rejestracji użytkownika nie tworzy się od razu ofert.
-// private List<JobOfferRequestDTO> jobOffers;
 }

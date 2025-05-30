@@ -8,6 +8,6 @@ public class RegisterRequestDTO {
     private String username;
     private String loginEmail;
     private String password;
-    // Tutaj kluczowy element: rola wybierana podczas rejestracji
-    private UserRole role; // CANDIDATE lub HR
+
+    private UserRole role;
 }

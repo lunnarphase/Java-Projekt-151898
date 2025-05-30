@@ -16,7 +16,5 @@ public class JobOfferResponseDTO {
     private LocalDateTime expiresAt;
     private boolean isActive;
 
-    // Możesz zwrócić ID twórcy oferty, ewentualnie uproszczony obiekt usera:
     private Long createdById;
-    // lub private UserResponseDTO createdBy; – w zależności od potrzeb
 }

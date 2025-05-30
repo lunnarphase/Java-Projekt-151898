@@ -44,7 +44,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String role = jwtUtil.getRoleFromToken(token);
         var authorities = jwtUtil.getAuthorities(role);
 
-        // --- POPRAWKA: pobierz UserDetails z bazy ---
         var userOpt = userRepository.findByLoginEmail(email);
         if (userOpt.isEmpty()) {
             filterChain.doFilter(request, response);

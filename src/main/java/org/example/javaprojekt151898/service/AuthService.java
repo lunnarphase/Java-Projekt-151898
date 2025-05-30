@@ -18,7 +18,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private JwtUtil jwtUtil;  // Klasa do generowania/parsowania JWT
+    private JwtUtil jwtUtil;
 
     public LoginResponseDTO login(LoginRequestDTO body) {
         String loginEmail = body.getLoginEmail();
@@ -31,7 +31,7 @@ public class AuthService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
-        // W roli (np. "CANDIDATE" lub "HR") musimy pamiętać, żeby Spring Security wymagał "ROLE_HR" / "ROLE_CANDIDATE" w configu
+
         String token = jwtUtil.generateToken(user.getLoginEmail(), user.getRole().name());
         LoginResponseDTO response = new LoginResponseDTO();
         response.setAccessToken(token);
@@ -48,7 +48,7 @@ public class AuthService {
         newUser.setUsername(body.getUsername());
         newUser.setLoginEmail(body.getLoginEmail());
         newUser.setPassword(passwordEncoder.encode(body.getPassword()));
-        newUser.setRole(body.getRole()); // np. CANDIDATE lub HR
+        newUser.setRole(body.getRole());
 
         User savedUser = userRepository.save(newUser);
 

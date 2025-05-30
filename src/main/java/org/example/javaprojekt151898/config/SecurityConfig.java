@@ -39,11 +39,8 @@ public class SecurityConfig {
                         // Pozostałe muszą być zalogowane
                         .anyRequest().authenticated()
                 )
-                // Dodaj filtr JWT przed UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
-        // Możesz też dodać .httpBasic(Customizer.withDefaults()) –
-        // jeśli chcesz pozwolić na basic auth do testów
         ;
 
         return http.build();
@@ -51,7 +48,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Możesz użyć też np. BCryptPasswordEncoder
         return new Argon2PasswordEncoder(16, 32, 1, 65536, 3);
     }
 }

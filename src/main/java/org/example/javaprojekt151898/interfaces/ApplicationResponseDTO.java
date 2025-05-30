@@ -11,8 +11,7 @@ public class ApplicationResponseDTO {
     private ApplicationStatus status;
     private String notes;
     private LocalDateTime appliedAt;
-    // W odpowiedzi można zwrócić ID kandydata i ID oferty,
-    // ewentualnie w formie uproszczonych obiektów (CandidateResponseDTO, JobOfferResponseDTO).
+
     private Long candidateId;
     private Long jobOfferId;
 }

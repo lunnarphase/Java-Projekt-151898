@@ -5,6 +5,15 @@ import lombok.Data;
 @Data
 public class RegisterResponseDTO {
     private String message;
-    // Ewentualnie można zwracać jakieś dane utworzonego użytkownika, np. ID
+
     private Long createdUserId;
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

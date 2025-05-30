@@ -30,6 +30,7 @@ public class AuthController {
     }
 
     @Operation(summary = "ALL - Get user details", description = "Returns details of the currently authenticated user")
+    @GetMapping
     @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
     public UserDetailsDTO getAccountInfo(@AuthenticationPrincipal UserDetails userDetails) {
         return authService.getAccountInfo(userDetails);

@@ -9,8 +9,4 @@ public class UserResponseDTO {
     private String username;
     private String loginEmail;
     private UserRole role;
-// Jeśli chcesz „odchudzić” odpowiedź, nie musisz podawać tu candidate czy job offers.
-// Możesz jednak dodać np. listę identyfikatorów utworzonych ofert, albo pewien minimalny zestaw informacji.
-// private List<Long> jobOfferIds;
-// private Long candidateId;
 }

@@ -15,6 +15,6 @@ public class JobOfferRequestDTO {
     private LocalDateTime expiresAt;
     private boolean isActive;
 
-    // Jeżeli chcesz połączyć nowo tworzoną ofertę z użytkownikiem (rekruterem / HR):
+
     private Long createdById;
 }

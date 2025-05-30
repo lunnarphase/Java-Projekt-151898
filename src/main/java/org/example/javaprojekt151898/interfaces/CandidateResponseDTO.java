@@ -11,6 +11,6 @@ public class CandidateResponseDTO {
     private String phoneNumber;
     private String cvPath;
     private String skills;
-    // Możesz zwracać userId, żeby wiedzieć, z którym userem jest to powiązane:
+
     private Long userId;
 }
