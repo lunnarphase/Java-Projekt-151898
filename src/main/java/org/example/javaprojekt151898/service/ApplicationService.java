@@ -1,10 +1,15 @@
 package org.example.javaprojekt151898.service;
 
 import org.example.javaprojekt151898.entity.Application;
+import org.example.javaprojekt151898.entity.ApplicationStatus;
+import org.example.javaprojekt151898.interfaces.ApplicationRequestDTO;
+import org.example.javaprojekt151898.interfaces.ApplicationResponseDTO;
 import org.example.javaprojekt151898.repository.ApplicationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationService {
@@ -14,29 +19,34 @@ public class ApplicationService {
         this.applicationRepository = applicationRepository;
     }
 
-    public Application getApplicationById(Long id) {
-        return applicationRepository.findById(id)
+    public ApplicationResponseDTO getApplicationById(Long id) {
+        Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Application with ID " + id + " not found."));
+        return convertToResponseDTO(application);
     }
 
-    public List<Application> getAllApplications() {
-        return applicationRepository.findAll();
+    public List<ApplicationResponseDTO> getAllApplications() {
+        return applicationRepository.findAll().stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
     }
 
-    public Application createApplication(Application application) {
-        // W tym miejscu możesz np. automatycznie ustawiać status APPLIED,
-        // lub walidować, czy jobOffer jest aktywny.
-        return applicationRepository.save(application);
+    public ApplicationResponseDTO createApplication(ApplicationRequestDTO applicationRequestDTO) {
+        Application application = convertToEntity(applicationRequestDTO);
+        application.setAppliedAt(LocalDateTime.now());
+        application.setStatus(ApplicationStatus.APPLIED); // Domyślny status
+
+        Application savedApplication = applicationRepository.save(application);
+        return convertToResponseDTO(savedApplication);
     }
 
-    public Application updateApplication(Long id, Application updatedApplication) {
+    public ApplicationResponseDTO updateApplication(Long id, ApplicationRequestDTO updatedApplicationDTO) {
         Application existing = applicationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Application with ID " + id + " not found."));
 
-        existing.setStatus(updatedApplication.getStatus());
-        existing.setNotes(updatedApplication.getNotes());
-        // Pola candidate, jobOffer – w zależności od tego, czy chcesz je modyfikować
-        return applicationRepository.save(existing);
+        updateEntityFromDTO(existing, updatedApplicationDTO);
+        Application updatedApplication = applicationRepository.save(existing);
+        return convertToResponseDTO(updatedApplication);
     }
 
     public void deleteApplication(Long id) {
@@ -44,5 +54,38 @@ public class ApplicationService {
             throw new RuntimeException("Application with ID " + id + " does not exist.");
         }
         applicationRepository.deleteById(id);
+    }
+
+    private ApplicationResponseDTO convertToResponseDTO(Application application) {
+        ApplicationResponseDTO responseDTO = new ApplicationResponseDTO();
+        responseDTO.setId(application.getId());
+        responseDTO.setStatus(application.getStatus());
+        responseDTO.setNotes(application.getNotes());
+        responseDTO.setAppliedAt(application.getAppliedAt());
+
+        if (application.getCandidate() != null) {
+            responseDTO.setCandidateId(application.getCandidate().getId());
+        }
+        if (application.getJobOffer() != null) {
+            responseDTO.setJobOfferId(application.getJobOffer().getId());
+        }
+
+        return responseDTO;
+    }
+
+    private Application convertToEntity(ApplicationRequestDTO requestDTO) {
+        Application application = new Application();
+        application.setStatus(requestDTO.getStatus());
+        application.setNotes(requestDTO.getNotes());
+        return application;
+    }
+
+    private void updateEntityFromDTO(Application application, ApplicationRequestDTO requestDTO) {
+        if (requestDTO.getStatus() != null) {
+            application.setStatus(requestDTO.getStatus());
+        }
+        if (requestDTO.getNotes() != null) {
+            application.setNotes(requestDTO.getNotes());
+        }
     }
 }

@@ -3,8 +3,10 @@ package org.example.javaprojekt151898.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.javaprojekt151898.entity.Candidate;
+import org.example.javaprojekt151898.interfaces.CandidateRequestDTO;
+import org.example.javaprojekt151898.interfaces.CandidateResponseDTO;
 import org.example.javaprojekt151898.service.CandidateService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,39 +22,54 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get candidate by ID", description = "Retrieve a candidate by its ID")
-    public Candidate getCandidateById(
+    @Operation(summary = "ALL - Get candidate by ID", description = "Retrieve a candidate by its ID")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
+    public CandidateResponseDTO getCandidateById(
             @Parameter(description = "ID of the candidate", required = true)
             @PathVariable Long id) {
         return candidateService.getCandidateById(id);
     }
 
     @GetMapping
-    @Operation(summary = "Get all candidates", description = "Retrieve a list of all candidates")
-    public List<Candidate> getAllCandidates() {
+    @Operation(summary = "ADMIN - Get all candidates from the database", description = "Retrieve a list of all candidates")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<CandidateResponseDTO> getAllCandidates() {
         return candidateService.getAllCandidates();
+    }
+
+    @GetMapping("/by-job-offer/{jobOfferId}")
+    @Operation(summary = "HR / ADMIN - Get candidates by job offer ID",
+            description = "Retrieve all candidates who applied to specific job offer")
+    @PreAuthorize("hasAnyRole('HR', 'ADMIN')")
+    public List<CandidateResponseDTO> getCandidatesByJobOfferId(
+            @Parameter(description = "ID of the job offer", required = true)
+            @PathVariable Long jobOfferId) {
+        return candidateService.getCandidatesByJobOfferId(jobOfferId);
     }
 
     @PostMapping
     @Operation(summary = "Create a new candidate", description = "Creates a new candidate in the database")
-    public Candidate createCandidate(
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
+    public CandidateResponseDTO createCandidate(
             @Parameter(description = "Candidate to be created", required = true)
-            @RequestBody Candidate candidate) {
-        return candidateService.createCandidate(candidate);
+            @RequestBody CandidateRequestDTO candidateRequestDTO) {
+        return candidateService.createCandidate(candidateRequestDTO);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update existing candidate", description = "Updates an existing candidate by its ID")
-    public Candidate updateCandidate(
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'HR', 'ADMIN')")
+    public CandidateResponseDTO updateCandidate(
             @Parameter(description = "ID of the candidate to be updated", required = true)
             @PathVariable Long id,
             @Parameter(description = "Updated candidate data", required = true)
-            @RequestBody Candidate updatedCandidate) {
-        return candidateService.updateCandidate(id, updatedCandidate);
+            @RequestBody CandidateRequestDTO updatedCandidateDTO) {
+        return candidateService.updateCandidate(id, updatedCandidateDTO);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete candidate by ID", description = "Deletes the candidate with the specified ID")
+    @Operation(summary = "ADMIN - Delete candidate by ID", description = "Deletes the candidate with the specified ID")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteCandidate(
             @Parameter(description = "ID of the candidate to be deleted", required = true)
             @PathVariable Long id) {
