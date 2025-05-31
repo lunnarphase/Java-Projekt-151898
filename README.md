@@ -28,16 +28,21 @@ System rekrutacyjny to kompleksowa aplikacja Spring Boot umożliwiająca efektyw
     - Statystyki aplikacji
 
 ## 📁 Struktura projektu
+```
 src/
-```main/
-``````java/org/example/javaprojekt151898/
-            ├── controller/   # Kontrolery REST API
-            ├── service/      # Warstwa logiki biznesowej
-            ├── security/     # Konfiguracja bezpieczeństwa
-            ├── config/       # Konfiguracja aplikacji
-            ├── entity/       # Encje bazodanowe
-            └── interfaces/   # Interfejsy
+└── main/
+    └── java/
+        └── org/
+            └── example/
+                └── javaprojekt151898/
+                    ├── controller/   # Kontrolery REST API oraz Auth API
+                    ├── service/      # Warstwa logiki biznesowej
+                    ├── security/     # Konfiguracja bezpieczeństwa - JwtUtil / JwAuthFilter
+                    ├── config/       # Konfiguracja aplikacji - SecurityConfig / SwaggerConfig
+                    ├── entity/       # Encje bazodanowe
+                    └── interfaces/   # Interfejsy - DTO
 
+```
 
 ## 🗄️ Schemat bazy danych (ERD)
 
