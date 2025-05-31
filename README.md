@@ -46,7 +46,7 @@ src/
 
 ## 🗄️ Schemat bazy danych (ERD)
 
-![Schemat ERD](img_1.png)
+![Schemat ERD](Schemat_ERD.png)
 
 ## 🔗 API Endpoints
 
@@ -92,7 +92,7 @@ Projekt został dokładnie przetestowany przy użyciu JUnit i Mockito.
 
 Raport pokrycia kodu wygenerowany przez JaCoCo pokazuje wysokie pokrycie testami:
 
-![Raport pokrycia testami](img.png)
+![Raport pokrycia testami](Raport_JaCoCo.png)
 
 ### Statystyki pokrycia:
 - **Całkowite pokrycie**: 97%
